@@ -35,9 +35,12 @@ public class ApplicationServer {
     public void startWithDatabaseName(String dbName) throws IOException, InterruptedException {
         String dbUrl = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&useTimezone=true&serverTimezone=UTC&useLegacyDatetimeCode=false";
 
+        //.put("REGISTRATION_SERVER_ENDPOINT", "http://localhost:8883")
         start(envMapBuilder()
             .put("SPRING_DATASOURCE_URL", dbUrl)
-            .put("REGISTRATION_SERVER_ENDPOINT", "http://localhost:8883")
+            .put("EUREKA_CLIENT_ENABLED", "false")
+            .put("RIBBON_EUREKA_ENABLED", "false")
+            .put("REGISTRATION_SERVER_RIBBON_LISTOFSERVERS", "http://localhost:8883")
             .build()
         );
     }
@@ -53,7 +56,7 @@ public class ApplicationServer {
 
     private static void waitUntilServerIsUp(String port) throws InterruptedException {
         HttpClient httpClient = new HttpClient();
-        int timeout = 120;
+        int timeout = 12000;
         Instant start = Instant.now();
         boolean isUp = false;
 

@@ -80,6 +80,7 @@ public class FlowTest {
         response = httpClient.get(registrationServerUrl("/"));
         assertThat(response.body).isEqualTo("Noop!");
 
+        System.out.println("asserted registrationServer - Noop");
         response = httpClient.post(registrationServerUrl("/registration"), jsonMapBuilder()
             .put("name", "aUser")
             .build()
@@ -105,7 +106,7 @@ public class FlowTest {
         response = httpClient.get(registrationServerUrl("/projects?accountId=" + createdAccountId));
         assertThat(findResponseId(response)).isEqualTo(createdProjectId);
 
-
+        System.out.println("asserted before allocation server");
         response = httpClient.get(allocationsServerUrl("/"));
         assertThat(response.body).isEqualTo("Noop!");
 
